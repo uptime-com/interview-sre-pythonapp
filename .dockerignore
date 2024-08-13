@@ -1,0 +1,8 @@
+.*
+**/__pycache__/
+Dockerfile
+docker-compose.yaml
+db.sqlite3
+db.sqlite3-journal
+initdb.d/
+venv/

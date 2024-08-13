@@ -1,0 +1,33 @@
+name: "pythonapp"
+
+services:
+  app:
+    image: pythonapp:latest
+    build:
+      context: .
+    environment:
+      # Database access is controlled by environment variables
+      DATABASE_HOST: postgres
+      DATABASE_USER: pythonapp
+      DATABASE_PASS: pythonapp
+      DATABASE_NAME: pythonapp_db
+    init: true
+    restart: on-failure
+    ports:
+      - "8000:8000"
+    # Uncomment if you want your code changes to take effect
+    # in real time without rebuild
+    # volumes:
+    #   - ./pythonapp:/usr/src/app/pythonapp
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    init: true
+    volumes:
+      - ./initdb.d:/docker-entrypoint-initdb.d
